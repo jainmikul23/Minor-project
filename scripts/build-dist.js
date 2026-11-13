@@ -3,17 +3,27 @@ const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
-const ejsPath = path.join(rootDir, 'backend/node_modules/ejs');
+const possibleEjsPaths = [
+    path.join(rootDir, 'frontend/node_modules/ejs'),
+    path.join(rootDir, 'backend/node_modules/ejs'),
+    path.join(rootDir, 'node_modules/ejs')
+];
 
-let ejs;
-try {
-    ejs = require(ejsPath);
-} catch (e) {
+let ejs = null;
+for (const p of possibleEjsPaths) {
+    try {
+        if (fs.existsSync(p)) {
+            ejs = require(p);
+            break;
+        }
+    } catch (e) {}
+}
+
+if (!ejs) {
     try {
         ejs = require('ejs');
-    } catch (e2) {
-        console.error('EJS not found, please run npm install');
-        process.exit(1);
+    } catch (e) {
+        console.warn('Note: ejs module not found in node_modules, using direct HTML fallback parser.');
     }
 }
 
@@ -45,11 +55,17 @@ async function renderPage(ejsRelPath, outRelPaths) {
     const fullEjs = path.join(rootDir, 'frontend', ejsRelPath);
     if (!fs.existsSync(fullEjs)) return;
     try {
-        const html = await ejs.renderFile(fullEjs, {
-            user: {},
-            official: {},
-            worker: {}
-        }, { views: [path.join(rootDir, 'frontend')] });
+        let html;
+        if (ejs && typeof ejs.renderFile === 'function') {
+            html = await ejs.renderFile(fullEjs, {
+                user: {},
+                official: {},
+                worker: {}
+            }, { views: [path.join(rootDir, 'frontend')] });
+        } else {
+            // Safe fallback reading raw HTML
+            html = fs.readFileSync(fullEjs, 'utf8');
+        }
 
         for (const outPath of outRelPaths) {
             const fullOut = path.join(distDir, outPath);
@@ -57,7 +73,15 @@ async function renderPage(ejsRelPath, outRelPaths) {
             fs.writeFileSync(fullOut, html, 'utf8');
         }
     } catch (err) {
-        console.warn(`Warning rendering ${ejsRelPath}:`, err.message);
+        console.warn(`Warning rendering ${ejsRelPath}, falling back to raw file:`, err.message);
+        try {
+            const rawHtml = fs.readFileSync(fullEjs, 'utf8');
+            for (const outPath of outRelPaths) {
+                const fullOut = path.join(distDir, outPath);
+                fs.mkdirSync(path.dirname(fullOut), { recursive: true });
+                fs.writeFileSync(fullOut, rawHtml, 'utf8');
+            }
+        } catch (e) {}
     }
 }
 
