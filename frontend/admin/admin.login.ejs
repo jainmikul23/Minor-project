@@ -120,6 +120,9 @@
         </div>
     </div>
 
+    <!-- Environment Config -->
+    <script src="/js/env.js"></script>
+
     <!-- 3D Card Tilt Interaction & Login Logic -->
     <script>
         // 3D Mouse Parallax & Dynamic Light Glare
@@ -234,7 +237,11 @@
             btnText.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Verifying Authorization...';
 
             try {
-                const response = await fetch('/admin/login', {
+                const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+                    ? window.__ENV__.API_BASE_URL
+                    : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+
+                const response = await fetch(apiBase + '/admin/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -250,7 +257,7 @@
                     loginBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
                     showAppleAlert('Authorized! Launching central administrative dashboard...', 'success');
                     setTimeout(() => {
-                        window.location.href = result.redirect || '/admin/dashboard';
+                        window.location.href = apiBase + (result.redirect || '/admin/dashboard') + (result.token ? ('?adminToken=' + encodeURIComponent(result.token)) : '');
                     }, 500);
                 } else {
                     showAppleAlert(result.error || 'Invalid admin credentials', 'error');

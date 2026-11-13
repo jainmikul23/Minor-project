@@ -27,9 +27,22 @@ if (!ejs) {
     }
 }
 
+const IGNORED_NAMES = new Set([
+    'node_modules',
+    'dist',
+    '.git',
+    '.DS_Store',
+    'package.json',
+    'package-lock.json'
+]);
+
 // Clean and recreate dist
 if (fs.existsSync(distDir)) {
     fs.rmSync(distDir, { recursive: true, force: true });
+}
+const frontendDist = path.join(rootDir, 'frontend/dist');
+if (fs.existsSync(frontendDist)) {
+    fs.rmSync(frontendDist, { recursive: true, force: true });
 }
 fs.mkdirSync(distDir, { recursive: true });
 
@@ -39,6 +52,7 @@ function copyDir(src, dest) {
     fs.mkdirSync(dest, { recursive: true });
     const entries = fs.readdirSync(src, { withFileTypes: true });
     for (const entry of entries) {
+        if (IGNORED_NAMES.has(entry.name)) continue;
         const srcPath = path.join(src, entry.name);
         const destPath = path.join(dest, entry.name);
         if (entry.isDirectory()) {

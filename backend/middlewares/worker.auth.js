@@ -3,6 +3,17 @@ const db = require('../database/dbConnect');
 
 const isWorkerAuthenticated = (req, res, next) => {
     let token = req.cookies.workerToken;
+    if (!token && req.query && (req.query.workerToken || req.query.token)) {
+        token = req.query.workerToken || req.query.token;
+        const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
+        res.cookie('workerToken', token, {
+            httpOnly: true,
+            secure: isProd,
+            path: '/',
+            sameSite: isProd ? 'none' : 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+    }
     if (!token && req.headers.authorization) {
         token = req.headers.authorization.startsWith('Bearer ')
             ? req.headers.authorization.split(' ')[1]

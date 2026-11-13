@@ -576,7 +576,10 @@ async function sendMessage() {
     }
     
     try {
-        const res = await fetch('/ai/process-message', {
+        const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+            ? window.__ENV__.API_BASE_URL
+            : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+        const res = await fetch(apiBase + '/ai/process-message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message, language: 'en' })

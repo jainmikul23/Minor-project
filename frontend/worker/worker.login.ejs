@@ -120,6 +120,9 @@
         </div>
     </div>
 
+    <!-- Environment Config -->
+    <script src="/js/env.js"></script>
+
     <!-- 3D Card Tilt Interaction & Login Logic -->
     <script>
         // 3D Mouse Parallax
@@ -212,7 +215,11 @@
             btnText.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Verifying Worker...';
 
             try {
-                const response = await fetch('/worker/login', {
+                const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+                    ? window.__ENV__.API_BASE_URL
+                    : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+
+                const response = await fetch(apiBase + '/worker/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -231,7 +238,7 @@
                         } catch (e) {}
                     }
                     setTimeout(() => {
-                        window.location.href = result.redirect || '/worker/dashboard';
+                        window.location.href = apiBase + (result.redirect || '/worker/dashboard') + (result.token ? ('?workerToken=' + encodeURIComponent(result.token)) : '');
                     }, 500);
                 } else {
                     showAppleAlert(result.error || 'Worker credentials not found. Please check phone and PIN.', 'error');

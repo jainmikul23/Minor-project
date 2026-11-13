@@ -15,13 +15,24 @@ app.use(cookieParser());
 const { logApiMiddleware } = require('./controllers/official.controllers/official.apiLogs.controller');
 app.use(logApiMiddleware);
 
+const allowedOrigins = [
+    "https://minor-project-t1cf.onrender.com",
+    "https://minor-project-1-uyvr.onrender.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+];
+
 app.use(cors({
-    origin: [
-        "https://minor-project-t1cf.onrender.com",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000"
-    ],
-    credentials: true
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.onrender.com') || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+            return callback(null, true);
+        }
+        return callback(null, true);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 }));
 
 // AI Agent Routes

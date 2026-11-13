@@ -518,7 +518,11 @@
         };
 
         try{
-            const response = await fetch('/user/register', {
+            const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+                ? window.__ENV__.API_BASE_URL
+                : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+
+            const response = await fetch(apiBase + '/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -151,11 +151,17 @@
         </div>
     </div>
 
+    <!-- Environment Config -->
+    <script src="/js/env.js"></script>
+
     <script>
         // Load live departments from backend API
         async function loadDepartments() {
             try {
-                const res = await fetch('/api/departments');
+                const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+                    ? window.__ENV__.API_BASE_URL
+                    : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+                const res = await fetch(apiBase + '/api/departments');
                 if (res.ok) {
                     const data = await res.json();
                     if (data.departments && data.departments.length > 0) {
@@ -256,7 +262,10 @@
             btnText.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Registering Official...';
 
             try {
-                const response = await fetch('/admin/register', {
+                const apiBase = (typeof window.__ENV__ !== 'undefined' && window.__ENV__.API_BASE_URL)
+                    ? window.__ENV__.API_BASE_URL
+                    : ((window.location && window.location.hostname.indexOf('uyvr') !== -1) ? 'https://minor-project-t1cf.onrender.com' : '');
+                const response = await fetch(apiBase + '/admin/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
