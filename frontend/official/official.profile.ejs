@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Portal - Municipal Services</title>
+    <!-- Consistent Typography with Citizen & Admin Portals -->
+    <link rel="stylesheet" href="/user/styles/citizen.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/official/officialStyles/officialStyles.css">
+</head>
+<body>
+    <!-- Soothing 3D Ambient Aurora Background (Consistent with Citizen & Admin) -->
+    <div class="ambient-background" aria-hidden="true">
+        <div class="aurora-orb aurora-orb-1" style="background: radial-gradient(circle, #93c5fd 0%, rgba(147, 197, 253, 0) 70%);"></div>
+        <div class="aurora-orb aurora-orb-2" style="background: radial-gradient(circle, #c7d2fe 0%, rgba(199, 210, 254, 0) 70%);"></div>
+        <div class="aurora-orb aurora-orb-3" style="background: radial-gradient(circle, #a7f3d0 0%, rgba(167, 243, 208, 0) 70%);"></div>
+        <div class="aurora-orb aurora-orb-4"></div>
+    </div>
+
+    <!-- Top Navigation Bar (Consistent with Citizen & Admin Portals) -->
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <div class="logo">
+                <a href="/">
+                    <div class="logo-icon-wrap" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <span>Official Portal</span>
+                </a>
+            </div>
+            <span class="official-badge-blue"><i class="fas fa-building"></i> Department Command</span>
+        </div>
+
+        <nav class="top-bar-nav">
+            <a href="/" class="top-nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="/services" class="top-nav-link"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="/about" class="top-nav-link"><i class="fas fa-info-circle"></i> About</a>
+            <a href="/contact" class="top-nav-link"><i class="fas fa-envelope"></i> Contact</a>
+        </nav>
+
+        <div class="top-bar-right">
+            <!-- Cross Portal Switchers -->
+            <div style="display: flex; gap: 8px; margin-right: 6px;">
+                <a href="/user/login" class="portal-switcher-pill" title="Open Citizen Portal">
+                    <i class="fas fa-user"></i> Citizen
+                </a>
+                <a href="/worker/login" class="portal-switcher-pill" title="Open Worker Portal">
+                    <i class="fas fa-tools"></i> Worker
+                </a>
+                <a href="/admin/login" class="portal-switcher-pill" title="Open Admin Portal">
+                    <i class="fas fa-shield-alt"></i> Admin
+                </a>
+            </div>
+
+            <!-- Active Tasks Counter -->
+            <div class="task-counter-pill">
+                <i class="fas fa-tasks"></i>
+                <span id="activeHeaderTaskCount">Loading Tasks...</span>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="profile-menu" style="display: flex; align-items: center; gap: 8px;">
+                <div class="profile-avatar" id="headerAvatar" style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #1e40af); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);">
+                    O
+                </div>
+                <span id="headerStaffName" style="font-weight: 600; font-size: 14px; color: #ffffff;">Official</span>
+            </div>
+
+            <a href="/official/logout" onclick="return confirm('Sign out of Official Portal?');" class="top-nav-logout-btn" title="Sign out of portal">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <!-- Two-Column Consistent Layout -->
+    <div class="main-container">
+        <!-- Left Sidebar Rail -->
+        <aside class="left-rail">
+            <!-- Official Profile Box -->
+            <div class="official-profile-card">
+                <div class="official-avatar-box">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="official-info-text">
+                    <h3 id="staffName">Municipal Officer</h3>
+                    <p id="staffDept">Department Operations</p>
+                    <span class="online-indicator"><span class="pulse-dot"></span> On Duty</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="rail-nav-menu">
+                <a href="#my-tasks" class="rail-nav-item active" id="nav-my-tasks" onclick="switchNavTab('my-tasks', event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-tasks"></i></div>
+                    <span>My Tasks</span>
+                </a>
+                <a href="#assigned-complaints" class="rail-nav-item" id="nav-assigned-complaints" onclick="switchNavTab('assigned-complaints', event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-clipboard-list"></i></div>
+                    <span>Assigned Complaints</span>
+                </a>
+                <a href="#field-updates" class="rail-nav-item" id="nav-field-updates" onclick="switchNavTab('field-updates', event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+                    <span>Field Updates</span>
+                </a>
+                <a href="#work-history" class="rail-nav-item" id="nav-work-history" onclick="showWorkHistory(event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-history"></i></div>
+                    <span>Work History</span>
+                </a>
+                <a href="#resources" class="rail-nav-item" id="nav-resources" onclick="showResources(event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-tools"></i></div>
+                    <span>Resources & SOPs</span>
+                </a>
+                <a href="#voice-reports" class="rail-nav-item" id="nav-voice-reports" onclick="showVoiceReports(event)">
+                    <div class="nav-icon-wrap"><i class="fas fa-server"></i></div>
+                    <span>User API Logs</span>
+                </a>
+                <a href="#appointments" class="rail-nav-item" id="nav-appointments" onclick="showOfficialAppointmentsModal(event)">
+                    <div class="nav-icon-wrap" style="color: #10b981;"><i class="fas fa-calendar-check"></i></div>
+                    <span>Citizen Appointments</span>
+                </a>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="quick-actions-box">
+                <div class="quick-actions-title">Field Quick Actions</div>
+                <div class="action-buttons-list">
+                    <button class="action-button-item" onclick="reportIssue()">
+                        <div class="btn-icon-capsule action-icon-alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="btn-text-content">
+                            <strong>Report Obstacle</strong>
+                            <small>Log barriers or bottlenecks</small>
+                        </div>
+                    </button>
+                    <button class="action-button-item" onclick="requestSupport()">
+                        <div class="btn-icon-capsule action-icon-support">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="btn-text-content">
+                            <strong>Request Support</strong>
+                            <small>Supervisor & crew backup</small>
+                        </div>
+                    </button>
+                    <button class="action-button-item" onclick="updateLocation()">
+                        <div class="btn-icon-capsule action-icon-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="btn-text-content">
+                            <strong>Share Location</strong>
+                            <small>Ping GPS coordinates</small>
+                        </div>
+                    </button>
+                    <button class="action-button-item" onclick="voiceUpdate()">
+                        <div class="btn-icon-capsule action-icon-voice">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="btn-text-content">
+                            <strong>Voice Note</strong>
+                            <small>Record field progress</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Banner Header -->
+            <div class="banner-header">
+                <div class="banner-tag"><i class="fas fa-shield-alt"></i> Official Operations Command</div>
+                <h1>Department Grievance & Field Team Operations</h1>
+                <p>Real-time grievance redressal, field worker dispatch, live GPS proof verification, and citizen OTP confirmation.</p>
+            </div>
+
+            <!-- Quick Stats KPI Cards (Consistent with Citizen & Admin) -->
+            <div class="stats-grid-compact">
+                <div class="admin-card kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Total Complaints</span>
+                        <div class="kpi-icon-wrap icon-blue"><i class="fas fa-clipboard-list"></i></div>
+                    </div>
+                    <div class="kpi-num" id="statTotalNum">0</div>
+                    <div class="kpi-sub"><i class="fas fa-layer-group"></i> Across department wards</div>
+                </div>
+
+                <div class="admin-card kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">In Progress</span>
+                        <div class="kpi-icon-wrap icon-amber"><i class="fas fa-spinner fa-spin"></i></div>
+                    </div>
+                    <div class="kpi-num" id="statInProgressNum" style="color: #d97706;">0</div>
+                    <div class="kpi-sub"><i class="fas fa-hard-hat"></i> Field teams assigned</div>
+                </div>
+
+                <div class="admin-card kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Resolved</span>
+                        <div class="kpi-icon-wrap icon-emerald"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                    <div class="kpi-num" id="statResolvedNum" style="color: #059669;">0</div>
+                    <div class="kpi-sub"><i class="fas fa-check-double"></i> Redressed successfully</div>
+                </div>
+
+                <div class="admin-card kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Reported (Pending)</span>
+                        <div class="kpi-icon-wrap icon-red"><i class="fas fa-exclamation-circle"></i></div>
+                    </div>
+                    <div class="kpi-num" id="statReportedNum" style="color: #dc2626;">0</div>
+                    <div class="kpi-sub"><i class="fas fa-bell"></i> Awaiting initial review</div>
+                </div>
+            </div>
+
+            <!-- Department Complaints Workspace -->
+            <div class="admin-card content-card" style="margin-bottom: 24px;">
+                <div class="card-header-row">
+                    <div>
+                        <h2 id="sectionTitle" style="font-family: 'Outfit', sans-serif; font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-layer-group" style="color: #2563eb;"></i> Department Complaints
+                        </h2>
+                        <p style="color: #64748b; font-size: 0.88rem; margin: 4px 0 0 0;">View citizen reports categorized by civic department and issue type.</p>
+                    </div>
+                    <span id="tasksCount" class="count-pill">Loading complaints...</span>
+                </div>
+
+                <div id="mainContent" class="complaints-list-box">
+                    <div style="padding: 40px; text-align: center; color: #64748b;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; color: #2563eb; margin-bottom: 12px;"></i>
+                        <p style="font-size: 1.05rem; font-weight: 600;">Loading complaints...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operational Redressal Progress -->
+            <div class="admin-card content-card">
+                <div class="card-header-row" style="margin-bottom: 18px;">
+                    <div>
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            <i class="fas fa-chart-line" style="color: #2563eb; margin-right: 8px;"></i>Operational Performance Metrics
+                        </h3>
+                        <p style="color: #64748b; font-size: 0.85rem; margin: 2px 0 0 0;">Department redressal targets and SLA compliance</p>
+                    </div>
+                    <span class="badge-pill-live"><span class="pulse-dot"></span> Live Benchmarks</span>
+                </div>
+
+                <div class="progress-track-item">
+                    <div class="progress-text-row">
+                        <span>Daily Redressal Target</span>
+                        <strong style="color: #2563eb;">12/15 tasks (80%)</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill-bar fill-blue" style="width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-track-item">
+                    <div class="progress-text-row">
+                        <span>Weekly Department Target</span>
+                        <strong style="color: #10b981;">68/75 tasks (91%)</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill-bar fill-green" style="width: 91%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-track-item">
+                    <div class="progress-text-row">
+                        <span>Monthly SLA Compliance</span>
+                        <strong style="color: #f59e0b;">245/300 tasks (82%)</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill-bar fill-orange" style="width: 82%;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Worker Management Modal (Consistent Glass Dialog) -->
+    <div id="workerModal" class="admin-modal-backdrop" style="display: none;">
+        <div class="admin-modal-box" style="max-width: 820px;">
+            <div class="modal-header">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-hard-hat" style="color: #2563eb;"></i> Field Worker Dispatch & Management
+                </h3>
+                <button class="modal-close-btn" onclick="closeWorkerModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Add Worker Section -->
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn-action-primary" onclick="toggleAddWorkerForm()" style="margin-bottom: 1rem;">
+                        <i class="fas fa-plus-circle"></i> Add New Field Worker
+                    </button>
+
+                    <div id="addWorkerForm" style="display: none; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.2rem; border-radius: 14px; margin-bottom: 1rem;">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: #0f172a;">Register New Department Field Worker</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1rem;">
+                            <div>
+                                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px;">First Name *</label>
+                                <input type="text" id="workerFirstName" placeholder="Enter first name" required style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px;">Last Name *</label>
+                                <input type="text" id="workerLastName" placeholder="Enter last name" required style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px;">Phone Number *</label>
+                                <input type="tel" id="workerPhone" placeholder="Enter phone number" required style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                            <button class="btn-action-secondary" onclick="toggleAddWorkerForm()">Cancel</button>
+                            <button class="btn-action-primary" onclick="submitNewWorker()">
+                                <i class="fas fa-user-plus"></i> Save Worker
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workers Table -->
+                <div>
+                    <h4 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: #0f172a; font-weight: 700;">Department Field Workforce</h4>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Worker Profile</th>
+                                    <th>Phone Number</th>
+                                    <th>Active Load</th>
+                                    <th>Dispatch</th>
+                                </tr>
+                            </thead>
+                            <tbody id="workersTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 2rem; color: #64748b;">
+                                        <i class="fas fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading available personnel...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Work History Modal -->
+    <div id="work-history-modal" class="admin-modal-backdrop" style="display: none;">
+        <div class="admin-modal-box" style="max-width: 860px;">
+            <div class="modal-header">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-history" style="color: #2563eb;"></i> Department Worker Assignment History
+                </h3>
+                <button class="modal-close-btn" onclick="closeWorkHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="work-history-content">
+                <div style="text-align: center; padding: 2.5rem; color: #64748b;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 8px; color: #2563eb;"></i>
+                    <p>Loading assignment history...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resources & Guidelines Modal -->
+    <div id="resources-modal" class="admin-modal-backdrop" style="display: none;">
+        <div class="admin-modal-box" style="max-width: 720px;">
+            <div class="modal-header">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-tools" style="color: #2563eb;"></i> Department Resources & SOPs
+                </h3>
+                <button class="modal-close-btn" onclick="closeResourcesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: grid; gap: 14px;">
+                    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 4px solid #0284c7; padding: 1.2rem; border-radius: 12px;">
+                        <h4 style="margin: 0 0 4px 0; color: #0369a1; font-size: 1rem;"><i class="fas fa-book"></i> Standard Operating Procedures (SOPs)</h4>
+                        <p style="color: #475569; font-size: 0.88rem; margin: 0 0 10px 0;">SLA resolution timeframes, geofence compliance standards, and citizen verification rules.</p>
+                        <button onclick="openGuidelinesModal()" class="btn-action-primary" style="font-size: 12px; padding: 6px 14px;">View Guidelines</button>
+                    </div>
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; padding: 1.2rem; border-radius: 12px;">
+                        <h4 style="margin: 0 0 4px 0; color: #065f46; font-size: 1rem;"><i class="fas fa-phone-alt"></i> Emergency Hotlines & Contacts</h4>
+                        <p style="color: #475569; font-size: 0.88rem; margin: 0 0 10px 0;">Direct access to Central Control, Water Works rapid repair, and Grid emergency units.</p>
+                        <button onclick="openEmergencyContactsModal()" class="btn-action-primary" style="font-size: 12px; padding: 6px 14px; background: #10b981;">View Contacts</button>
+                    </div>
+                    <div style="background: #fefce8; border: 1px solid #fef08a; border-left: 4px solid #f59e0b; padding: 1.2rem; border-radius: 12px;">
+                        <h4 style="margin: 0 0 4px 0; color: #854d0e; font-size: 1rem;"><i class="fas fa-wrench"></i> Field Readiness Checklist</h4>
+                        <p style="color: #475569; font-size: 0.88rem; margin: 0 0 10px 0;">Safety harnesses, tools, multimeters, dewatering pumps, and safety cones verification.</p>
+                        <button onclick="openEquipmentChecklistModal()" class="btn-action-primary" style="font-size: 12px; padding: 6px 14px; background: #f59e0b;">View Checklist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Logs Modal (User API Interactions) -->
+    <div id="voice-reports-modal" class="admin-modal-backdrop" style="display: none;">
+        <div class="admin-modal-box" style="max-width: 1100px; max-height: 88vh; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-server" style="color: #2563eb;"></i> User API Interactions & System Audit Stream
+                    </h3>
+                    <p style="color: #64748b; font-size: 0.85rem; margin: 2px 0 0 0;">Audit logs of all citizen inquiries, official actions, and API responses</p>
+                </div>
+                <button class="modal-close-btn" onclick="closeVoiceReportsModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 1.5rem;">
+                <!-- Filter Bar -->
+                <div class="filter-bar" style="margin-bottom: 1rem;">
+                    <select id="filter-user-type" onchange="filterApiLogs()" class="filter-select">
+                        <option value="">All User Types</option>
+                        <option value="citizen">Citizens</option>
+                        <option value="official">Officials</option>
+                        <option value="guest">Guests</option>
+                    </select>
+                    <select id="filter-endpoint" onchange="filterApiLogs()" class="filter-select">
+                        <option value="">All Endpoints</option>
+                        <option value="/api/chat">Chat AI API</option>
+                        <option value="/complaints">Complaints</option>
+                        <option value="/user">Citizen Actions</option>
+                        <option value="/official">Official Actions</option>
+                    </select>
+                    <button onclick="loadApiLogs()" class="btn-action-primary" style="padding: 8px 16px;">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+
+                <!-- Stats Summary -->
+                <div id="api-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.2rem;"></div>
+
+                <div id="voice-reports-content">
+                    <div style="text-align: center; padding: 2.5rem; color: #64748b;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #2563eb; margin-bottom: 8px;"></i>
+                        <p>Loading API audit stream...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Citizen Appointments Modal for Official -->
+    <div id="official-appointments-modal" class="admin-modal-backdrop" style="display: none;">
+        <div class="admin-modal-box" style="max-width: 920px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #059669); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0;">Department Citizen Consultations</h3>
+                        <p style="color: #64748b; font-size: 0.85rem; margin: 2px 0 0 0;">Scheduled citizen hearings and grievance consultations</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeOfficialAppointmentsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="officialAppointmentsList">
+                <div style="text-align: center; padding: 2.5rem; color: #64748b;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #2563eb; margin-bottom: 8px;"></i>
+                    <p>Loading consultations...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/official/officialJS/official.profile.js"></script>
+</body>
+</html>

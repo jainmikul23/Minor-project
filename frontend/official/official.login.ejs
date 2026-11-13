@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Portal Login - Municipal Services</title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 3D Ambient Lighting & Perspective Grid -->
+    <div class="bg-ambient-layer">
+        <div class="bg-perspective-grid"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Top Floating Navigation -->
+    <header class="top-nav-bar">
+        <a href="/" class="back-home-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+        <nav class="portal-nav-switcher" aria-label="Portal Navigation">
+            <a href="/user/login" class="portal-switch-pill">
+                <i class="fas fa-user"></i> <span>Citizen</span>
+            </a>
+            <a href="/official/login" class="portal-switch-pill active official">
+                <i class="fas fa-building"></i> <span>Official</span>
+            </a>
+            <a href="/worker/login" class="portal-switch-pill">
+                <i class="fas fa-hard-hat"></i> <span>Field Worker</span>
+            </a>
+            <a href="/admin/login" class="portal-switch-pill">
+                <i class="fas fa-shield-alt"></i> <span>Admin</span>
+            </a>
+        </nav>
+        <div class="portal-badge-pill" style="border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.12);">
+            <span class="pulse-dot" style="background: #06b6d4; box-shadow: 0 0 10px #06b6d4;"></span>
+            <span style="color: #22d3ee;">Official Portal Active</span>
+        </div>
+    </header>
+
+    <!-- 3D Card Scene -->
+    <div class="auth-card-scene" id="cardScene">
+        <div class="auth-container" id="tiltCard">
+            <!-- Specular reflection glare -->
+            <div class="card-specular-glare" id="cardGlare"></div>
+
+            <div class="card-content-layer">
+                <!-- Header -->
+                <div class="auth-header">
+                    <div class="logo-badge-3d" style="background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.4);">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h1>Official Login</h1>
+                    <p>Municipal Staff, Field Engineers & Department Heads</p>
+                </div>
+
+                <!-- Apple-grade Liquid Glass Dynamic Toast Alert -->
+                <div id="apple-alert" class="apple-glass-toast" style="display: none;">
+                    <div class="apple-toast-icon" id="appleAlertIcon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="apple-toast-body">
+                        <span class="apple-toast-msg" id="appleAlertMsg"></span>
+                    </div>
+                    <button type="button" class="apple-toast-close" onclick="hideAppleAlert()" aria-label="Dismiss">&times;</button>
+                </div>
+
+                <!-- Form -->
+                <form class="auth-form" onsubmit="event.preventDefault(); loginDetails();">
+                    <div class="form-group">
+                        <label for="Login_credentials">Login ID / Credentials</label>
+                        <div class="input-3d-wrapper">
+                            <i class="fas fa-id-badge input-icon-left"></i>
+                            <input type="text" id="Login_credentials" name="Login_credentials" placeholder="e.g. OFFICIAL01" required autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-3d-wrapper">
+                            <i class="fas fa-lock input-icon-left"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••••••" required autocomplete="current-password">
+                            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-3d-primary" id="loginBtn" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.4);">
+                        <span id="btnText"><i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Sign In to Staff Portal</span>
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    Different account? <a href="/user/login" style="font-weight: 700; color: #0284c7;">Citizen Portal</a>
+                    <div class="portal-switch-footer">
+                        <div>Switch to another portal:</div>
+                        <div class="portal-chips-container">
+                            <a href="/user/login" class="portal-chip-btn"><i class="fas fa-user"></i> Citizen</a>
+                            <a href="/official/login" class="portal-chip-btn active"><i class="fas fa-building"></i> Official</a>
+                            <a href="/worker/login" class="portal-chip-btn"><i class="fas fa-hard-hat"></i> Worker</a>
+                            <a href="/admin/login" class="portal-chip-btn"><i class="fas fa-shield-alt"></i> Admin</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Highlights -->
+                <div class="login-features-row">
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> Field Dispatch</span>
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> Work Orders</span>
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> GPS Geotagging</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Card Tilt Interaction & Login Logic -->
+    <script>
+        // 3D Mouse Parallax & Dynamic Light Glare
+        const scene = document.getElementById('cardScene');
+        const card = document.getElementById('tiltCard');
+        const glare = document.getElementById('cardGlare');
+
+        let isHovered = false;
+        let bounds = null;
+
+        function updateBounds() {
+            bounds = card.getBoundingClientRect();
+        }
+        window.addEventListener('resize', updateBounds);
+        window.addEventListener('scroll', updateBounds);
+
+        scene.addEventListener('mouseenter', () => {
+            isHovered = true;
+            updateBounds();
+            card.style.transition = 'none';
+        });
+
+        scene.addEventListener('mouseleave', () => {
+            isHovered = false;
+            card.style.transition = 'transform 0.4s ease, box-shadow 0.3s ease';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+        });
+
+        scene.addEventListener('mousemove', (e) => {
+            if (!bounds) updateBounds();
+            const mouseX = e.clientX - bounds.left;
+            const mouseY = e.clientY - bounds.top;
+
+            const xPct = mouseX / bounds.width;
+            const yPct = mouseY / bounds.height;
+
+            const rotateX = ((0.5 - yPct) * 6).toFixed(2);
+            const rotateY = ((xPct - 0.5) * 6).toFixed(2);
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            card.style.setProperty('--mouse-x', `${(xPct * 100).toFixed(1)}%`);
+            card.style.setProperty('--mouse-y', `${(yPct * 100).toFixed(1)}%`);
+            glare.style.opacity = '1';
+        });
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Apple-grade Glass Toast Notification Controller
+        function showAppleAlert(message, type = 'error') {
+            const alertBox = document.getElementById('apple-alert');
+            const alertMsg = document.getElementById('appleAlertMsg');
+            const alertIcon = document.getElementById('appleAlertIcon');
+            if (!alertBox || !alertMsg) return;
+
+            alertBox.className = `apple-glass-toast ${type}`;
+            alertMsg.textContent = message;
+            if (alertIcon) {
+                alertIcon.innerHTML = (type === 'success') 
+                    ? '<i class="fas fa-check-circle" style="color: #10b981;"></i>' 
+                    : (type === 'info')
+                    ? '<i class="fas fa-sparkles" style="color: #0284c7;"></i>'
+                    : '<i class="fas fa-exclamation-circle" style="color: #ef4444;"></i>';
+            }
+
+            alertBox.style.display = 'flex';
+            if (type !== 'success') {
+                setTimeout(() => {
+                    hideAppleAlert();
+                }, 6000);
+            }
+        }
+
+        function hideAppleAlert() {
+            const alertBox = document.getElementById('apple-alert');
+            if (!alertBox) return;
+            alertBox.style.opacity = '0';
+            alertBox.style.transform = 'translateY(-10px) scale(0.96)';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+                alertBox.style.opacity = '';
+                alertBox.style.transform = '';
+            }, 250);
+        }
+
+        // Login Submission
+        async function loginDetails() {
+            const loginCredentials = document.getElementById('Login_credentials').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!loginCredentials || !password) {
+                showAppleAlert('Please enter both Login credentials and password.', 'error');
+                return;
+            }
+
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Authenticating Staff...';
+
+            try {
+                const response = await fetch('/official/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ Login_credentials: loginCredentials, Password: password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    btnText.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>Success! Redirecting...';
+                    loginBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    showAppleAlert('Welcome Staff! Loading official dashboard...', 'success');
+                    if (result.official) {
+                        try {
+                            localStorage.setItem('officialUser', JSON.stringify(result.official));
+                            if (result.token) localStorage.setItem('token', result.token);
+                        } catch (e) {}
+                    }
+                    setTimeout(() => {
+                        window.location.href = '/official/profile';
+                    }, 500);
+                } else {
+                    showAppleAlert(result.error || result.message || 'Invalid credentials', 'error');
+                    loginBtn.disabled = false;
+                    btnText.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Sign In to Staff Portal';
+                }
+            } catch (error) {
+                console.error('Error during official login:', error);
+                showAppleAlert('Network error during login. Please try again.', 'error');
+                loginBtn.disabled = false;
+                btnText.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Sign In to Staff Portal';
+            }
+        }
+    </script>
+</body>
+</html>

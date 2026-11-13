@@ -1,0 +1,22 @@
+# robots.txt for Indore Municipal Corporation Civic Issue Reporting Platform
+User-agent: *
+Allow: /
+Allow: /services
+Allow: /about
+Allow: /contact
+Allow: /user/login
+Allow: /official/login
+Allow: /worker/login
+Allow: /admin/login
+
+# Disallow internal authenticated API routes and staff dashboards
+Disallow: /admin/dashboard
+Disallow: /admin/assign
+Disallow: /official/dashboard
+Disallow: /worker/dashboard
+Disallow: /api/
+Disallow: /ai/
+
+# XML Sitemap location for search crawlers
+Sitemap: https://indore-civic.gov.in/sitemap.xml
+

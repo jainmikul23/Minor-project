@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indore Civic Portal - Smart Municipal Grievance & Service Resolution</title>
+
+    <!-- Comprehensive SEO Meta Tags for Top Google Ranking -->
+    <meta name="description" content="Official Indore Municipal Corporation Civic Issue Portal. Report potholes, street lights, water leaks, and sanitation issues with AI dispatch, SLA tracking, and OTP verification.">
+    <meta name="keywords" content="Indore Municipal Corporation, IMC portal, report pothole Indore, street light repair, water leak grievance, garbage cleaning, Swachh Indore, civic issue reporting, citizen grievance app">
+    <meta name="author" content="Indore Municipal Corporation">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://indore-civic.gov.in/">
+
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Indore Civic Portal - Smart Municipal Grievance & Service Resolution">
+    <meta property="og:description" content="Report civic issues, track field worker assignments, and verify resolution in real time across all 85 wards of Indore.">
+    <meta property="og:url" content="https://indore-civic.gov.in/">
+    <meta property="og:site_name" content="Indore Municipal Corporation Civic Portal">
+    <meta property="og:image" content="https://indore-civic.gov.in/landing/banner.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Indore Civic Portal - Smart Municipal Services">
+    <meta name="twitter:description" content="File & track municipal issues in Indore with AI classification and instant worker dispatch.">
+    <meta name="twitter:image" content="https://indore-civic.gov.in/landing/banner.png">
+
+    <!-- Schema.org JSON-LD Structured Data for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "GovernmentOrganization",
+          "@id": "https://indore-civic.gov.in/#organization",
+          "name": "Indore Municipal Corporation",
+          "url": "https://indore-civic.gov.in",
+          "description": "Smart, AI-powered civic issue resolution platform for Indore citizens, department officials, and field workers.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Palika Plaza, M.G. Road",
+            "addressLocality": "Indore",
+            "addressRegion": "Madhya Pradesh",
+            "postalCode": "452001",
+            "addressCountry": "IN"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-731-2511000",
+            "contactType": "Customer Service",
+            "areaServed": "Indore",
+            "availableLanguage": ["Hindi", "English"]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://indore-civic.gov.in/#website",
+          "url": "https://indore-civic.gov.in",
+          "name": "Indore Civic Issue Reporting Platform",
+          "publisher": {
+            "@id": "https://indore-civic.gov.in/#organization"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="/landing/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Ambient Aurora Floating Glow Spheres for Soothing 3D Atmosphere -->
+    <div class="ambient-background" aria-hidden="true">
+        <div class="aurora-orb aurora-orb-1"></div>
+        <div class="aurora-orb aurora-orb-2"></div>
+        <div class="aurora-orb aurora-orb-3"></div>
+        <div class="aurora-orb aurora-orb-4"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-city"></i>
+                <h1>WELCOME TO PORTAL</h1>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/services" class="nav-link">Services</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <span class="nav-divider"></span>
+                <a href="/user/login" class="nav-portal-btn nav-portal-citizen"><i class="fas fa-user"></i> Citizen</a>
+                <a href="/official/login" class="nav-portal-btn nav-portal-official"><i class="fas fa-hard-hat"></i> Official</a>
+                <a href="/worker/login" class="nav-portal-btn nav-portal-worker"><i class="fas fa-tools"></i> Worker</a>
+                <a href="/admin/login" class="nav-portal-btn nav-portal-admin"><i class="fas fa-shield-alt"></i> Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- User Type Selection -->
+    <section class="user-selection" id="userSelection">
+        <div class="container">
+            <div class="selection-header">
+                <h2>Civic Governance Portals</h2>
+                <p>Select your gateway to access personal services, department field dispatch, or citywide administration</p>
+            </div>
+
+            <div class="user-cards">
+                <!-- 1. CITIZEN PORTAL -->
+                <div class="user-card" id="citizenCard">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Citizen Portal</h3>
+                    <p>Report civic grievances, track field remediation, upload photos with GPS tagging, and use the AI assistant.</p>
+
+                    <div class="card-features">
+                        <span><i class="fas fa-check"></i> Report Grievances & Upload Media</span>
+                        <span><i class="fas fa-check"></i> Live Geotagging & Face Privacy</span>
+                        <span><i class="fas fa-check"></i> Real-time Worker Tracking & Ratings</span>
+                        <span><i class="fas fa-check"></i> Multilingual AI Voice Assistant</span>
+                    </div>
+
+                    <button class="btn-primary" onclick="redirectToPortal('citizen')">
+                        Enter Citizen Portal
+                    </button>
+                </div>
+
+                <!-- 2. OFFICIAL PORTAL -->
+                <div class="user-card" id="officialCard">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #0284c7, #38bdf8);">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Official Portal</h3>
+                    <p>Department officers and engineers: assign tasks to field workers, monitor work orders, and review redressed complaints.</p>
+
+                    <div class="card-features">
+                        <span><i class="fas fa-check"></i> Department Task Queue & Dispatch</span>
+                        <span><i class="fas fa-check"></i> Field Workforce Assignment</span>
+                        <span><i class="fas fa-check"></i> Task Status & Completion Logs</span>
+                        <span><i class="fas fa-check"></i> Department AI Voice Reports</span>
+                    </div>
+
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);" onclick="redirectToPortal('official')">
+                        Enter Official Portal
+                    </button>
+                </div>
+
+                <!-- 3. WORKER PORTAL -->
+                <div class="user-card" id="workerCard">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Worker Portal</h3>
+                    <p>Field workforce and maintenance crew: access assigned tasks, view priority rankings, and submit GPS-verified resolution proof.</p>
+
+                    <div class="card-features">
+                        <span><i class="fas fa-check"></i> Priority-Ranked Task Queue (P(i))</span>
+                        <span><i class="fas fa-check"></i> SLA Countdown & Navigation Maps</span>
+                        <span><i class="fas fa-check"></i> GPS Proof of Resolution Upload</span>
+                        <span><i class="fas fa-check"></i> Performance History & Citizen Ratings</span>
+                    </div>
+
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="redirectToPortal('worker')">
+                        Enter Worker Portal
+                    </button>
+                </div>
+
+                <!-- 4. ADMIN PORTAL -->
+                <div class="user-card" id="adminCard">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Admin Portal</h3>
+                    <p>Central administration control room: citywide grievance analytics, staff provisioning, and municipal department oversight.</p>
+
+                    <div class="card-features">
+                        <span><i class="fas fa-check"></i> Real-time Citywide Analytics</span>
+                        <span><i class="fas fa-check"></i> Silent Ward Equity Detection</span>
+                        <span><i class="fas fa-check"></i> Field Workforce & Roster Control</span>
+                        <span><i class="fas fa-check"></i> Department Taxonomy & Grievance Actions</span>
+                    </div>
+
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);" onclick="redirectToPortal('admin')">
+                        Enter Admin Portal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Platform Features</h2>
+                <p>Comprehensive digital solutions for modern governance</p>
+            </div>
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Voice Assistant</h3>
+                    <p>AI-powered voice commands for hands-free interaction and accessibility</p>
+                    <ul class="feature-list">
+                        <li>Natural language processing</li>
+                        <li>Multi-language support</li>
+                        <li>Accessibility features</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Comprehensive dashboards and reporting for data-driven decisions</p>
+                    <ul class="feature-list">
+                        <li>Live performance metrics</li>
+                        <li>Predictive analytics</li>
+                        <li>Custom reporting</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Responsive design ensuring seamless experience across all devices</p>
+                    <ul class="feature-list">
+                        <li>Progressive web app</li>
+                        <li>Offline capabilities</li>
+                        <li>Touch-friendly interface</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Assistant Widget -->
+    <div class="voice-assistant-widget" id="voiceAssistant">
+        <div class="voice-header" onclick="toggleVoiceAssistant()">
+            <i class="fas fa-microphone"></i>
+            <span>Voice Assistant</span>
+            <i class="fas fa-chevron-up" id="voiceToggle"></i>
+        </div>
+
+        <div class="voice-body" id="voiceBody">
+            <div class="voice-status">
+                <div class="status-indicator" id="statusIndicator">
+                    <i class="fas fa-microphone-slash"></i>
+                    <span id="voiceStatus">Click to activate voice assistant</span>
+                </div>
+            </div>
+
+            <div class="voice-transcript" id="voiceTranscript">
+                <div class="transcript-header">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Live Transcript</span>
+                </div>
+                <div class="transcript-content" id="transcriptContent">
+                    <p class="placeholder-text">Voice transcript will appear here...</p>
+                </div>
+            </div>
+
+            <div class="voice-commands">
+                <div class="commands-header">
+                    <i class="fas fa-list"></i>
+                    <span>Try saying:</span>
+                </div>
+                <div class="command-list">
+                    <span class="command-item">"Show citizen portal"</span>
+                    <span class="command-item">"Track my complaints"</span>
+                    <span class="command-item">"Report an issue"</span>
+                    <span class="command-item">"Help me get started"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-header" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+            <span>Chat Support</span>
+            <i class="fas fa-chevron-up" id="chatbotToggle"></i>
+        </div>
+
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <i class="fas fa-robot"></i>
+                    <span>Hello! How can I help you today?</span>
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your message...">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Digital Government</h4>
+                    <p>Empowering citizens through digital transformation</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Portals</h4>
+                    <ul>
+                        <li><a href="/user/login">Citizen Portal</a></li>
+                        <li><a href="/official/login">Official Portal</a></li>
+                        <li><a href="/worker/login">Worker Portal</a></li>
+                        <li><a href="/admin/login">Admin Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>support@civicportal.gov</p>
+                    <p>1-800-GOV-HELP</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/landing/script.js"></script>
+    <script>
+        // 3D Parallax Tilt on Portal Cards
+        document.querySelectorAll('.user-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPct = x / rect.width;
+                const yPct = y / rect.height;
+                const rotateX = ((0.5 - yPct) * 12).toFixed(2);
+                const rotateY = ((xPct - 0.5) * 12).toFixed(2);
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
+</html>

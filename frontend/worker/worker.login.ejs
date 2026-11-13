@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Portal Login - Field Operations</title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 3D Ambient Lighting & Perspective Grid -->
+    <div class="bg-ambient-layer">
+        <div class="bg-perspective-grid"></div>
+        <div class="floating-orb orb-1" style="background: radial-gradient(circle, rgba(16, 185, 129, 0.7) 0%, rgba(5, 150, 105, 0.1) 70%, transparent 100%);"></div>
+        <div class="floating-orb orb-2" style="background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, rgba(217, 119, 6, 0.1) 70%, transparent 100%);"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Top Floating Navigation -->
+    <header class="top-nav-bar">
+        <a href="/" class="back-home-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+        <nav class="portal-nav-switcher" aria-label="Portal Navigation">
+            <a href="/user/login" class="portal-switch-pill">
+                <i class="fas fa-user"></i> <span>Citizen</span>
+            </a>
+            <a href="/official/login" class="portal-switch-pill">
+                <i class="fas fa-building"></i> <span>Official</span>
+            </a>
+            <a href="/worker/login" class="portal-switch-pill active worker">
+                <i class="fas fa-hard-hat"></i> <span>Field Worker</span>
+            </a>
+            <a href="/admin/login" class="portal-switch-pill">
+                <i class="fas fa-shield-alt"></i> <span>Admin</span>
+            </a>
+        </nav>
+        <div class="portal-badge-pill" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.12);">
+            <span class="pulse-dot" style="background: #10b981; box-shadow: 0 0 10px #10b981;"></span>
+            <span style="color: #34d399;">Field Worker Portal Active</span>
+        </div>
+    </header>
+
+    <!-- 3D Card Scene -->
+    <div class="auth-card-scene" id="cardScene">
+        <div class="auth-container" id="tiltCard">
+            <!-- Specular reflection glare -->
+            <div class="card-specular-glare" id="cardGlare"></div>
+
+            <div class="card-content-layer">
+                <!-- Header -->
+                <div class="auth-header">
+                    <div class="logo-badge-3d" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h1>Worker Login</h1>
+                    <p>Field Staff, Technicians & Municipal Maintenance Crews</p>
+                </div>
+
+                <!-- Apple-grade Liquid Glass Dynamic Toast Alert -->
+                <div id="apple-alert" class="apple-glass-toast" style="display: none;">
+                    <div class="apple-toast-icon" id="appleAlertIcon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="apple-toast-body">
+                        <span class="apple-toast-msg" id="appleAlertMsg"></span>
+                    </div>
+                    <button type="button" class="apple-toast-close" onclick="hideAppleAlert()" aria-label="Dismiss">&times;</button>
+                </div>
+
+                <!-- Form -->
+                <form class="auth-form" onsubmit="event.preventDefault(); loginWorkerSubmit();">
+                    <div class="form-group">
+                        <label for="Phone">Registered Mobile Number</label>
+                        <div class="input-3d-wrapper">
+                            <i class="fas fa-mobile-alt input-icon-left"></i>
+                            <input type="tel" id="Phone" name="Phone" placeholder="10-digit mobile number" required autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Pin">Worker Security PIN (Default: 1234)</label>
+                        <div class="input-3d-wrapper">
+                            <i class="fas fa-key input-icon-left"></i>
+                            <input type="password" id="Pin" name="Pin" placeholder="4-digit PIN" value="1234" required autocomplete="current-password">
+                            <button type="button" class="password-toggle-btn" onclick="togglePinVisibility()" title="Show/Hide PIN">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-3d-primary" id="loginBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);">
+                        <span id="btnText"><i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Open Assigned Tasks Portal</span>
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    Different account? <a href="/user/login" style="font-weight: 700; color: #10b981;">Citizen Portal</a>
+                    <div class="portal-switch-footer">
+                        <div>Switch to another portal:</div>
+                        <div class="portal-chips-container">
+                            <a href="/user/login" class="portal-chip-btn"><i class="fas fa-user"></i> Citizen</a>
+                            <a href="/official/login" class="portal-chip-btn"><i class="fas fa-building"></i> Official</a>
+                            <a href="/worker/login" class="portal-chip-btn active"><i class="fas fa-hard-hat"></i> Worker</a>
+                            <a href="/admin/login" class="portal-chip-btn"><i class="fas fa-shield-alt"></i> Admin</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Highlights -->
+                <div class="login-features-row">
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> GPS Proof of Work</span>
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> Priority Scores</span>
+                    <span class="feature-pill-small"><i class="fas fa-check-circle"></i> Direct Navigation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Card Tilt Interaction & Login Logic -->
+    <script>
+        // 3D Mouse Parallax
+        const scene = document.getElementById('cardScene');
+        const card = document.getElementById('tiltCard');
+        const glare = document.getElementById('cardGlare');
+
+        scene.addEventListener('mousemove', (e) => {
+            const bounds = card.getBoundingClientRect();
+            const mouseX = e.clientX - bounds.left;
+            const mouseY = e.clientY - bounds.top;
+            const xPct = mouseX / bounds.width;
+            const yPct = mouseY / bounds.height;
+            const rotateX = ((0.5 - yPct) * 6).toFixed(2);
+            const rotateY = ((xPct - 0.5) * 6).toFixed(2);
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            card.style.setProperty('--mouse-x', `${(xPct * 100).toFixed(1)}%`);
+            card.style.setProperty('--mouse-y', `${(yPct * 100).toFixed(1)}%`);
+            glare.style.opacity = '1';
+        });
+
+        scene.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+        });
+
+        function togglePinVisibility() {
+            const pinInput = document.getElementById('Pin');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (pinInput.type === 'password') {
+                pinInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                pinInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Apple-grade Glass Toast Notification Controller
+        function showAppleAlert(message, type = 'error') {
+            const alertBox = document.getElementById('apple-alert');
+            const alertMsg = document.getElementById('appleAlertMsg');
+            const alertIcon = document.getElementById('appleAlertIcon');
+            if (!alertBox || !alertMsg) return;
+
+            alertBox.className = `apple-glass-toast ${type}`;
+            alertMsg.textContent = message;
+            if (alertIcon) {
+                alertIcon.innerHTML = (type === 'success') 
+                    ? '<i class="fas fa-check-circle" style="color: #10b981;"></i>' 
+                    : (type === 'info')
+                    ? '<i class="fas fa-sparkles" style="color: #10b981;"></i>'
+                    : '<i class="fas fa-exclamation-circle" style="color: #ef4444;"></i>';
+            }
+
+            alertBox.style.display = 'flex';
+            if (type !== 'success') {
+                setTimeout(() => {
+                    hideAppleAlert();
+                }, 6000);
+            }
+        }
+
+        function hideAppleAlert() {
+            const alertBox = document.getElementById('apple-alert');
+            if (!alertBox) return;
+            alertBox.style.opacity = '0';
+            alertBox.style.transform = 'translateY(-10px) scale(0.96)';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+                alertBox.style.opacity = '';
+                alertBox.style.transform = '';
+            }, 250);
+        }
+
+        async function loginWorkerSubmit() {
+            const phone = document.getElementById('Phone').value.trim();
+            const pin = document.getElementById('Pin').value.trim();
+
+            if (!phone) {
+                showAppleAlert('Please enter your registered mobile number.', 'error');
+                return;
+            }
+
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Verifying Worker...';
+
+            try {
+                const response = await fetch('/worker/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ Phone: phone, Pin: pin })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    btnText.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>Authorized! Opening Tasks...';
+                    showAppleAlert('Authorized! Launching assigned work orders...', 'success');
+                    if (result.worker) {
+                        try {
+                            localStorage.setItem('currentWorker', JSON.stringify(result.worker));
+                            if (result.token) localStorage.setItem('workerToken', result.token);
+                        } catch (e) {}
+                    }
+                    setTimeout(() => {
+                        window.location.href = result.redirect || '/worker/dashboard';
+                    }, 500);
+                } else {
+                    showAppleAlert(result.error || 'Worker credentials not found. Please check phone and PIN.', 'error');
+                    loginBtn.disabled = false;
+                    btnText.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Open Assigned Tasks Portal';
+                }
+            } catch (error) {
+                console.error('Error logging in worker:', error);
+                showAppleAlert('Network error during login. Please try again.', 'error');
+                loginBtn.disabled = false;
+                btnText.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Open Assigned Tasks Portal';
+            }
+        }
+    </script>
+</body>
+</html>
+

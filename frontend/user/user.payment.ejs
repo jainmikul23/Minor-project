@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Payments - Indore Municipal Corporation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles/common.css">
+    <style>
+        :root {
+            --primary: #0071e3;
+            --primary-dark: #005bb5;
+            --text-dark: #1d1d1f;
+            --text-muted: #86868b;
+            --glass-bg: rgba(255, 255, 255, 0.72);
+            --glass-border: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: radial-gradient(circle at 10% 20%, #eff6ff 0%, #f8fafc 40%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #0f172a;
+        }
+
+        .header-brand i {
+            font-size: 1.8rem;
+            color: #0071e3;
+        }
+
+        .header-brand span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #0071e3;
+        }
+
+        .payment-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .payment-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: 
+                0 30px 60px -12px rgba(15, 23, 42, 0.12),
+                0 18px 36px -18px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            padding: 3rem 2.5rem;
+            max-width: 620px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .icon-halo {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 1.5rem;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #0071e3 0%, #38bdf8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 16px 32px -8px rgba(0, 113, 227, 0.45);
+        }
+
+        .title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 0.5rem;
+            letter-spacing: -0.6px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #64748b;
+            margin: 0 0 2rem;
+            line-height: 1.5;
+        }
+
+        .notice-banner {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1.5px solid #93c5fd;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .notice-icon {
+            font-size: 1.6rem;
+            color: #2563eb;
+            margin-top: 2px;
+        }
+
+        .notice-text h3 {
+            margin: 0 0 0.4rem;
+            color: #1e3a8a;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .notice-text p {
+            margin: 0;
+            color: #1e40af;
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .bill-previews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .bill-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 1.1rem;
+            text-align: left;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .bill-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .bill-card i {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .bill-card h4 {
+            margin: 0 0 4px;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        .bill-badge {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #d97706;
+            background: #fef3c7;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
+            color: white;
+            padding: 0.85rem 1.8rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 20px -4px rgba(0, 113, 227, 0.4);
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px -4px rgba(0, 113, 227, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e293b;
+            padding: 0.85rem 1.8rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+        }
+
+        .security-badge {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/user/profile" class="header-brand">
+            <i class="fas fa-landmark"></i>
+            <span>Indore Municipal Services</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/"><i class="fas fa-home"></i> Home</a>
+            <a href="/services"><i class="fas fa-th-large"></i> Services</a>
+            <a href="/user/profile"><i class="fas fa-user-circle"></i> Citizen Portal</a>
+            <a href="/user/logout" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <main class="payment-container">
+        <div class="payment-card">
+            <div class="icon-halo">
+                <i class="fas fa-credit-card"></i>
+            </div>
+
+            <h1 class="title">Municipal Utility Payments</h1>
+            <p class="subtitle">Secure digital payment gateway for civic utility bills and taxes</p>
+
+            <!-- Prominent Integration Message -->
+            <div class="notice-banner">
+                <div class="notice-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="notice-text">
+                    <h3>We are still integrating payment services. Thank you!</h3>
+                    <p>
+                        We are currently partnering with NPCI, Bharat BillPay (BBPS), and certified banking gateways to bring you seamless UPI, Debit/Credit Card, and Netbanking payments.
+                        <br><br>
+                        <strong>Thank you for your patience and civic cooperation!</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Previews of Bill Types -->
+            <div class="bill-previews">
+                <div class="bill-card">
+                    <i class="fas fa-tint" style="color: #3b82f6;"></i>
+                    <h4>Water Supply</h4>
+                    <div class="bill-badge">Integrating...</div>
+                </div>
+                <div class="bill-card">
+                    <i class="fas fa-building" style="color: #10b981;"></i>
+                    <h4>Property Tax</h4>
+                    <div class="bill-badge">Integrating...</div>
+                </div>
+                <div class="bill-card">
+                    <i class="fas fa-trash-alt" style="color: #f59e0b;"></i>
+                    <h4>Sanitation Cess</h4>
+                    <div class="bill-badge">Integrating...</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/user/profile" class="btn-primary">
+                    <i class="fas fa-arrow-left"></i> Return to Citizen Portal
+                </a>
+                <a href="javascript:void(0)" onclick="if(typeof openTrackComplaint==='function'){openTrackComplaint();}else{window.location.href='/user/profile';}" class="btn-secondary">
+                    <i class="fas fa-list-check"></i> View My Complaints
+                </a>
+            </div>
+
+            <div class="security-badge">
+                <i class="fas fa-shield-halved" style="color: #10b981;"></i>
+                Indore Municipal Corporation (IMC) • 256-Bit SSL Encrypted
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+
