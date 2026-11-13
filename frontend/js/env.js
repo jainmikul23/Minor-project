@@ -21,3 +21,4 @@
         window.SERVER_URL = window.__ENV__.API_BASE_URL;
     }
 })();
+

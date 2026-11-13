@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node script.js",
     "dev": "node script.js",
-    "build": "npm install",
+    "build": "npm install && node ../scripts/build-dist.js",
     "serve": "node script.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

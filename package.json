@@ -5,6 +5,6 @@
   "scripts": {
     "start": "npm --prefix backend start",
     "dev": "npm --prefix backend start",
-    "build": "cd backend && npm install"
+    "build": "cd backend && npm install && node ../scripts/build-dist.js"
   }
 }
