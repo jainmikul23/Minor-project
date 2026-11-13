@@ -19,5 +19,5 @@ Disallow: /api/
 Disallow: /ai/
 
 # XML Sitemap location for search crawlers
-Sitemap: https://minor-project-t1cf.onrender.com/sitemap.xml
+Sitemap: https://minor-project-1-uyvr.onrender.com/sitemap.xml
 
