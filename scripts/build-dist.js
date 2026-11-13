@@ -83,6 +83,14 @@ async function build() {
     await renderPage('admin/admin.login.ejs', ['admin/login/index.html', 'admin/login.html']);
 
     console.log('✅ ./dist created successfully with all static pages and assets!');
+
+    // Also mirror to frontend/dist for Render configurations where Root Directory is set to "frontend"
+    const frontendDist = path.join(rootDir, 'frontend/dist');
+    if (fs.existsSync(frontendDist)) {
+        fs.rmSync(frontendDist, { recursive: true, force: true });
+    }
+    copyDir(distDir, frontendDist);
+    console.log('✅ ./frontend/dist mirrored successfully!');
 }
 
 build();

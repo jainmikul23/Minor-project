@@ -46,6 +46,7 @@ backend/upload/uploads/*
 
 # Build and coverage
 dist/
+frontend/dist/
 build/
 coverage/
 .nyc_output/

@@ -1,0 +1,9 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Civic Complaint Management System Frontend",
+  "scripts": {
+    "build": "node ../scripts/build-dist.js",
+    "start": "echo 'Frontend built in dist'"
+  }
+}
