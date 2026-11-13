@@ -20,7 +20,8 @@ const renderWorkerLogin = (req, res) => {
 
 // Login Worker via Phone & Pin/Password
 const loginWorker = (req, res) => {
-    const { Phone, Pin } = req.body;
+    const Phone = req.body.Phone || req.body.phone;
+    const Pin = req.body.Pin || req.body.pin || req.body.password;
 
     if (!Phone) {
         return res.status(400).json({ success: false, error: 'Phone number is required.' });

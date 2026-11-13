@@ -114,3 +114,4 @@ Minor-project/
 - Environment credentials, private keys, and API tokens are never checked into source control.
 - Passwords are salt-hashed using **Bcrypt**.
 - Authentication is enforced via signed **JSON Web Tokens (JWT)** with HTTP-only cookies and Bearer headers.
+
