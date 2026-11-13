@@ -4,7 +4,9 @@
  */
 
 if (typeof window.SERVER_URL === 'undefined') {
-    window.SERVER_URL = 'http://localhost:3000';
+    window.SERVER_URL = (typeof window !== 'undefined' && window.location && window.location.origin) 
+        ? window.location.origin 
+        : 'https://minor-project-t1cf.onrender.com';
 }
 
 // Store conversation history

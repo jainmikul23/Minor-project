@@ -5,57 +5,57 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <!-- Home / Citizen Landing Portal -->
     <url>
-        <loc>https://indore-civic.gov.in/</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <!-- Civic Municipal Services -->
     <url>
-        <loc>https://indore-civic.gov.in/services</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/services</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <!-- About Indore Municipal Corporation -->
     <url>
-        <loc>https://indore-civic.gov.in/about</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/about</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <!-- Contact & Emergency Helplines -->
     <url>
-        <loc>https://indore-civic.gov.in/contact</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/contact</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <!-- Citizen Login & Grievance Filing -->
     <url>
-        <loc>https://indore-civic.gov.in/user/login</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/user/login</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <!-- Municipal Official Grievance Management -->
     <url>
-        <loc>https://indore-civic.gov.in/official/login</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/official/login</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     <!-- Field Staff & Worker Task Dispatch Portal -->
     <url>
-        <loc>https://indore-civic.gov.in/worker/login</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/worker/login</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     <!-- Administrative Governance Portal -->
     <url>
-        <loc>https://indore-civic.gov.in/admin/login</loc>
-        <lastmod>2026-11-05</lastmod>
+        <loc>https://minor-project-t1cf.onrender.com/admin/login</loc>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

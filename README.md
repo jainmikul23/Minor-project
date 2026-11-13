@@ -1,5 +1,9 @@
 # Minor-project: Civic Grievance Redressal & Smart City Platform
 
+[![Live Deployment](https://img.shields.io/badge/Live%20URL-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://minor-project-t1cf.onrender.com/)
+
+**Live Production URL:** [https://minor-project-t1cf.onrender.com/](https://minor-project-t1cf.onrender.com/)
+
 An intelligent, full-stack municipal operations and civic grievance redressal system powered by **Node.js**, **Express**, **MySQL**, and **Google Gemini AI**.
 
 ---

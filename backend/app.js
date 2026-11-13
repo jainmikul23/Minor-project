@@ -16,7 +16,11 @@ const { logApiMiddleware } = require('./controllers/official.controllers/officia
 app.use(logApiMiddleware);
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: [
+        "https://minor-project-t1cf.onrender.com",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],
     credentials: true
 }));
 

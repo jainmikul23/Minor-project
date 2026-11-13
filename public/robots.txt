@@ -18,5 +18,5 @@ Disallow: /api/
 Disallow: /ai/
 
 # XML Sitemap location for search crawlers
-Sitemap: https://indore-civic.gov.in/sitemap.xml
+Sitemap: https://minor-project-t1cf.onrender.com/sitemap.xml
 

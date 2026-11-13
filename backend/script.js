@@ -96,13 +96,14 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    const liveUrl = process.env.RENDER_EXTERNAL_URL || 'https://minor-project-t1cf.onrender.com';
+    console.log(`Server is running on ${PORT === 3000 ? `http://localhost:${PORT}` : liveUrl}`);
     console.log('✅ Global error handlers registered');
     console.log('✅ Uncaught exception handler registered');
     console.log('✅ Unhandled rejection handler registered');
 
     // Render Free-tier Keep-Alive mechanism (Prevents 15-minute inactivity spin-down)
-    const renderUrl = process.env.RENDER_EXTERNAL_URL;
+    const renderUrl = process.env.RENDER_EXTERNAL_URL || 'https://minor-project-t1cf.onrender.com';
     if (renderUrl) {
         const pingUrl = `${renderUrl.replace(/\/$/, '')}/health`;
         console.log(`⏱️ Render keep-alive enabled: Ping scheduled every 14 minutes for ${pingUrl}`);

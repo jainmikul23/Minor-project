@@ -1,5 +1,5 @@
 // Configuration
-const SERVER_URL = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : 'http://localhost:3000';
+const SERVER_URL = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : 'https://minor-project-t1cf.onrender.com';
 
 // Language / Translations
 let currentLang = localStorage.getItem('lang') || 'en';
