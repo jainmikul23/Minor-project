@@ -49,3 +49,7 @@ build/
 coverage/
 .nyc_output/
 
+# Database dumps and backups
+*.sql
+
+

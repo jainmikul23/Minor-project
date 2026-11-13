@@ -1,10 +1,8 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 console.log('Environment loaded:', {
-    DB_HOST: process.env.DB_HOST,
-    DB_USER: process.env.DB_USER,
-    DB_NAME: process.env.DB_NAME,
-    hasPassword: !!process.env.DB_PASSWORD
+    hasDatabaseUrl: !!process.env.DATABASE_URL,
+    nodeEnv: process.env.NODE_ENV || 'development'
 });
 const app = require("./app");
 const userRoutes = require("./routes/user.routes");
@@ -97,7 +95,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 app.listen(PORT, () => {
     const liveUrl = process.env.RENDER_EXTERNAL_URL || 'https://minor-project-t1cf.onrender.com';
-    console.log(`Server is running on ${PORT === 3000 ? `http://localhost:${PORT}` : liveUrl}`);
+    console.log(`Server is running on ${Number(PORT) === 3000 ? `http://localhost:${PORT}` : liveUrl}`);
     console.log('✅ Global error handlers registered');
     console.log('✅ Uncaught exception handler registered');
     console.log('✅ Unhandled rejection handler registered');

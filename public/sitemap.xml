@@ -1,62 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-    <!-- Home / Citizen Landing Portal -->
+
+    <!-- 1. Citizen Landing & Grievance Portal Home -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/</loc>
         <lastmod>2026-11-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://minor-project-t1cf.onrender.com/landing/banner.png</image:loc>
+            <image:title>Indore Civic Grievance &amp; Issue Resolution Platform</image:title>
+            <image:caption>Official Indore Municipal Corporation smart civic reporting and automated dispatch portal</image:caption>
+        </image:image>
     </url>
-    <!-- Civic Municipal Services -->
+
+    <!-- 2. Municipal Civic Services -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/services</loc>
         <lastmod>2026-11-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://minor-project-t1cf.onrender.com/landing/banner.png</image:loc>
+            <image:title>Indore Municipal Services: Water, Sanitation, Roads, Electricity</image:title>
+        </image:image>
     </url>
-    <!-- About Indore Municipal Corporation -->
+
+    <!-- 3. About Indore Municipal Corporation -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/about</loc>
         <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-    <!-- Contact & Emergency Helplines -->
+
+    <!-- 4. Contact & Emergency Helplines -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/contact</loc>
         <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-    <!-- Citizen Login & Grievance Filing -->
+
+    <!-- 5. Citizen Login Portal -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/user/login</loc>
         <lastmod>2026-11-13</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.9</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
     </url>
-    <!-- Municipal Official Grievance Management -->
+
+    <!-- 6. Citizen Registration & Sign Up -->
+    <url>
+        <loc>https://minor-project-t1cf.onrender.com/user/register</loc>
+        <lastmod>2026-11-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 7. Municipal Official Portal Login -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/official/login</loc>
         <lastmod>2026-11-13</lastmod>
-        <changefreq>daily</changefreq>
+        <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
-    <!-- Field Staff & Worker Task Dispatch Portal -->
+
+    <!-- 8. Field Staff & Worker Dispatch Portal -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/worker/login</loc>
         <lastmod>2026-11-13</lastmod>
-        <changefreq>daily</changefreq>
+        <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
-    <!-- Administrative Governance Portal -->
+
+    <!-- 9. Administrative Governance Portal -->
     <url>
         <loc>https://minor-project-t1cf.onrender.com/admin/login</loc>
         <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
+
 </urlset>

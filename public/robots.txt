@@ -5,6 +5,7 @@ Allow: /services
 Allow: /about
 Allow: /contact
 Allow: /user/login
+Allow: /user/register
 Allow: /official/login
 Allow: /worker/login
 Allow: /admin/login

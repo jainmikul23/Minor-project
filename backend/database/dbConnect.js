@@ -2,24 +2,31 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const mysql = require('mysql2');
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'MinorDBFake',
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  console.warn("⚠️ Warning: DATABASE_URL is not set in backend/.env.");
+  console.warn("👉 Please set: DATABASE_URL=mysql://root:YOUR_PASSWORD@switchback.proxy.rlwy.net:11739/railway");
+}
+
+const db = mysql.createPool({
+  uri: databaseUrl || 'mysql://root:placeholder@switchback.proxy.rlwy.net:11739/railway',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
+db.getConnection((err, connection) => {
   if (err) {
-    console.error("❌ MySQL Connection Error:", err.message);
-    console.error("DB Config:", {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      database: process.env.DB_NAME
-    });
+    console.error("❌ Railway MySQL Connection Error:", err.message);
+    if (!databaseUrl) {
+      console.error("👉 Reason: DATABASE_URL is missing in backend/.env. Add your rotated password to connect.");
+    }
     return;
   }
-  console.log("✅ Connected to MySQL Database (" + (process.env.DB_NAME || 'MinorDBFake') + ")");
+  console.log("✅ Connected to Railway MySQL Database (railway) via Connection Pool");
+  connection.release();
 });
 
 module.exports = db;
+

@@ -3,11 +3,16 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 async function initFakeDb() {
+  if (process.env.DATABASE_URL || process.env.NODE_ENV === 'production') {
+    console.error("🛑 Refusing to run init_fake_db in production or when DATABASE_URL is set!");
+    process.exit(1);
+  }
+
   console.log('Connecting to MySQL host:', process.env.DB_HOST);
   console.log('Target database: MinorDBFake (preserving MinorDB unchanged)');
 
   const connection = await mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD,
     multipleStatements: true
