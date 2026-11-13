@@ -4,6 +4,7 @@
   "description": "Civic Complaint Management System",
   "scripts": {
     "start": "npm --prefix backend start",
-    "dev": "npm --prefix backend start"
+    "dev": "npm --prefix backend start",
+    "build": "cd backend && npm install"
   }
 }
